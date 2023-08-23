@@ -45,8 +45,6 @@ class WebviewWindow {
   gboolean DecidePolicy(WebKitPolicyDecision *decision,
                         WebKitPolicyDecisionType type);
 
-  void EvaluateJavaScript(const char *java_script, FlMethodCall* call);
-
  private:
   FlMethodChannel *method_channel_;
   int64_t window_id_;

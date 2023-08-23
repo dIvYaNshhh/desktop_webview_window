@@ -179,17 +179,6 @@ class WebViewLayoutController: NSViewController {
     webView.stopLoading()
   }
 
-  func evaluateJavaScript(javaScriptString: String, completer: @escaping FlutterResult) {
-    webView.evaluateJavaScript(javaScriptString) { result, error in
-      if let error = error {
-        completer(FlutterError(code: "1", message: error.localizedDescription, details: nil))
-        return
-      }
-      completer(result)
-    }
-  }
-}
-
 extension WebViewLayoutController: WKNavigationDelegate {
   func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
     guard let url = navigationAction.request.url else {
