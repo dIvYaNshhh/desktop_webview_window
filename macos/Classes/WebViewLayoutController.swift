@@ -178,6 +178,7 @@ class WebViewLayoutController: NSViewController {
   func stopLoading() {
     webView.stopLoading()
   }
+}
 
 extension WebViewLayoutController: WKNavigationDelegate {
   func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
