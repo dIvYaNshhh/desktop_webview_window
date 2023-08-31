@@ -94,9 +94,9 @@ void WebviewWindow::CreateAndShow(const std::wstring &title, int height, int wid
   GetClientRect(hwnd_.get(), &rc);
   if (!useWindowPositionAndSize && !openMaximized) {
     ClipOrCenterRectToMonitor(&rc, MONITOR_CENTER);
-    LONG style = GetWindowLong(hwnd, GWL_STYLE);
+    LONG style = GetWindowLong(hwnd_.get(), GWL_STYLE);
     style &= ~(WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
-    SetWindowLong(hwnd, GWL_STYLE, style);
+    SetWindowLong(hwnd_.get(), GWL_STYLE, style);
     SetWindowPos(hwnd_.get(), nullptr, rc.left, rc.top, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE);
   }
 
