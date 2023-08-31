@@ -76,6 +76,7 @@ WebviewWindow::WebviewWindow(
                          nullptr, nullptr, nullptr);
                    }), this);
   gtk_window_set_title(GTK_WINDOW(window_), title.c_str());
+  gtk_window_set_resizable(GTK_WINDOW(window_), FALSE);
   gtk_window_set_default_size(GTK_WINDOW(window_), width, height);
   gtk_window_set_position(GTK_WINDOW(window_), GTK_WIN_POS_CENTER);
 
