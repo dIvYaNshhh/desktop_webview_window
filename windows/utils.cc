@@ -55,7 +55,12 @@ void ClipOrCenterWindowToMonitor(HWND hwnd, UINT flags) {
   RECT rc;
   GetWindowRect(hwnd, &rc);
   ClipOrCenterRectToMonitor(&rc, flags);
-  SetWindowPos(hwnd, nullptr, rc.left, rc.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+
+  LONG style = GetWindowLong(hwnd, GWL_STYLE);
+  style &= ~(WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
+  SetWindowLong(hwnd, GWL_STYLE, style);
+
+  SetWindowPos(hwnd, nullptr, rc.left, rc.top, 0, 0,  SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE);
 }
 
 bool SetWindowBackgroundTransparent(HWND hwnd) {

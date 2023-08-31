@@ -94,7 +94,10 @@ void WebviewWindow::CreateAndShow(const std::wstring &title, int height, int wid
   GetClientRect(hwnd_.get(), &rc);
   if (!useWindowPositionAndSize && !openMaximized) {
     ClipOrCenterRectToMonitor(&rc, MONITOR_CENTER);
-    SetWindowPos(hwnd_.get(), nullptr, rc.left, rc.top, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+    LONG style = GetWindowLong(hwnd, GWL_STYLE);
+    style &= ~(WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
+    SetWindowLong(hwnd, GWL_STYLE, style);
+    SetWindowPos(hwnd_.get(), nullptr, rc.left, rc.top, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE);
   }
 
   auto title_bar_height = Scale(title_bar_height_, scale_factor);
@@ -206,8 +209,12 @@ WebviewWindow::MessageHandler(
       LONG newWidth = newRectSize->right - newRectSize->left;
       LONG newHeight = newRectSize->bottom - newRectSize->top;
 
+      LONG style = GetWindowLong(hwnd, GWL_STYLE);
+      style &= ~(WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
+      SetWindowLong(hwnd, GWL_STYLE, style);
+    
       SetWindowPos(hwnd, nullptr, newRectSize->left, newRectSize->top, newWidth,
-                   newHeight, SWP_NOZORDER | SWP_NOACTIVATE);
+                   newHeight, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_NOACTIVATE);
       return 0;
     }
     case WM_SIZE: {
